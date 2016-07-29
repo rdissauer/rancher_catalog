@@ -8,7 +8,6 @@ jira:
     - X_PROXY_SCHEME=https
   labels:
     io.rancher.sidekicks: jira-home
-
 confluence:
   image: cptactionhank/atlassian-confluence
   volumes_from:
@@ -19,7 +18,6 @@ confluence:
     - X_PROXY_SCHEME=https
   labels:
     io.rancher.sidekicks: confluence-home
-
 bitbucket:
   image: cptactionhank/atlassian-bitbucket
   volumes_from:
@@ -30,7 +28,6 @@ bitbucket:
     - X_PROXY_SCHEME=https
   labels:
     io.rancher.sicekicks: bitbucket-home
-
 bamboo:
   image: cptactionhank/atlassian-bamboo
   volumes_from:
@@ -41,14 +38,12 @@ bamboo:
     - X_PROXY_SCHEME=https
   labels:
     io.rancher.sidekicks: bamboo-home
-
 postgres:
   image: postgres:9.4
   volumes_from:
     - postgres-data
   labels:
     io.rancher.sidekicks: postgres-data
-
 jira-home:
   net: none
   image: busybox
@@ -57,7 +52,6 @@ jira-home:
   volumes:
     - /var/atlassian/jira
     - /opt/atlassian/jira/logs
-
 confluence-home:
   net: none
   image: busybox
@@ -66,7 +60,6 @@ confluence-home:
   volumes:
     - /var/atlassian/confluence
     - /opt/atlassian/confluence/logs
-
 bitbucket-home:
   net: none
   image: busybox
@@ -75,7 +68,6 @@ bitbucket-home:
   volumes:
     - /var/atlassian/bitbucket
     - /opt/atlassian/bitbucket/logs
-
 bamboo-home:
   net: none
   image: busybox
@@ -84,7 +76,6 @@ bamboo-home:
   volumes:
     - /var/atlassian/bamboo
     - /opt/atlassian/bamboo/logs
-
 postgres-data:
   net: none
   image: busybox
