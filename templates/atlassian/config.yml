@@ -1,0 +1,8 @@
+name: Atlassian Toolchain
+description: |
+  Jira, Confluence, Bitbucket, Bamboo
+version: v0.1.0
+category: Production
+maintainer: Roman Dissauer
+license: commercial
+projectURL: www.atlassian.com
