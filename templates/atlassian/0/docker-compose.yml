@@ -27,7 +27,7 @@ bitbucket:
     - X_PROXY_PORT=443
     - X_PROXY_SCHEME=https
   labels:
-    io.rancher.sicekicks: bitbucket-home
+    io.rancher.sidekicks: bitbucket-home
 bamboo:
   image: cptactionhank/atlassian-bamboo
   volumes_from:
