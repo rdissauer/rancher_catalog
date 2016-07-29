@@ -38,7 +38,7 @@
       label: "Database Password"
       required: true
       default: "mysecretpassword"
-      type: string
+      type: password
     - variable: POSTGRES_DB
       label: "Database Name"
       required: true
