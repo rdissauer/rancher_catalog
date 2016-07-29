@@ -1,0 +1,94 @@
+jira:
+  image: cptactionhank/atlassian-jira
+  volumes_from:
+    - jira-home
+  environment:
+    - X_PROXY_NAME=${jira_host}
+    - X_PROXY_PORT=443
+    - X_PROXY_SCHEME=https
+  labels:
+    io.rancher.sidekicks: jira-home
+
+confluence:
+  image: cptactionhank/atlassian-confluence
+  volumes_from:
+    - confluence-home
+  environment:
+    - X_PROXY_NAME=${confluence_host}
+    - X_PROXY_PORT=443
+    - X_PROXY_SCHEME=https
+  labels:
+    io.rancher.sidekicks: confluence-home
+
+bitbucket:
+  image: cptactionhank/atlassian-bitbucket
+  volumes_from:
+    - bitbucket-home
+  environment:
+    - X_PROXY_NAME=${bitbucket_host}
+    - X_PROXY_PORT=443
+    - X_PROXY_SCHEME=https
+  labels:
+    io.rancher.sicekicks: bitbucket-home
+
+bamboo:
+  image: cptactionhank/atlassian-bamboo
+  volumes_from:
+    - bamboo-home
+  environment:
+    - X_PROXY_NAME=${bamboo_host}
+    - X_PROXY_PORT=443
+    - X_PROXY_SCHEME=https
+  labels:
+    io.rancher.sidekicks: bamboo-home
+
+postgres:
+  image: postgres:9.4
+  volumes_from:
+    - postgres-data
+  labels:
+    io.rancher.sidekicks: postgres-data
+
+jira-home:
+  net: none
+  image: busybox
+  labels:
+    io.rancher.container.start_once: true
+  volumes:
+    - /var/atlassian/jira
+    - /opt/atlassian/jira/logs
+
+confluence-home:
+  net: none
+  image: busybox
+  labels:
+    io.rancher.container.start_once: true
+  volumes:
+    - /var/atlassian/confluence
+    - /opt/atlassian/confluence/logs
+
+bitbucket-home:
+  net: none
+  image: busybox
+  labels:
+    io.rancher.container.start_once: true
+  volumes:
+    - /var/atlassian/bitbucket
+    - /opt/atlassian/bitbucket/logs
+
+bamboo-home:
+  net: none
+  image: busybox
+  labels:
+    io.rancher.container.start_once: true
+  volumes:
+    - /var/atlassian/bamboo
+    - /opt/atlassian/bamboo/logs
+
+postgres-data:
+  net: none
+  image: busybox
+  labels:
+    io.rancher.container.start_once: true
+  volumes:
+    - /var/lib/postgresql/data
