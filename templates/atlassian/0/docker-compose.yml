@@ -5,10 +5,10 @@ atlassian-lb:
   - 443:443
   labels:
     io.rancher.loadbalancer.ssl.ports: '443'
-    io.rancher.loadbalancer.target.jira: ${JIRA_HOST}/bamboo=8085
-    io.rancher.loadbalancer.target.confluence: ${CONFLUENCE_HOST}/bitbucket=7990
-    io.rancher.loadbalancer.target.bitbucket: ${BITBUCKET_HOST}/jira=8080
-    io.rancher.loadbalancer.target.bamboo: ${BAMBOO_HOST}/confluence=8090
+    io.rancher.loadbalancer.target.jira: ${JIRA_HOST}=8085
+    io.rancher.loadbalancer.target.confluence: ${CONFLUENCE_HOST}=7990
+    io.rancher.loadbalancer.target.bitbucket: ${BITBUCKET_HOST}=8080
+    io.rancher.loadbalancer.target.bamboo: ${BAMBOO_HOST}=8090
   links:
     - jira:jira
     - bamboo:bamboo

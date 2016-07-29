@@ -19,13 +19,13 @@
       type: string
     - variable: BITBUCKET_HOST
       description: "Hostname of Bitbucket instance reachable from external"
-      label: "Confluence Host"
+      label: "Bitbucket Host"
       required: true
       default: "bitbucket.example.com"
       type: string
     - variable: BAMBOO_HOST
       description: "Hostname of Bamboo instance reachable from external"
-      label: "Confluence Host"
+      label: "Bamboo Host"
       required: true
       default: "bamboo.example.com"
       type: string
