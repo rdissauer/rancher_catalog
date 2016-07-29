@@ -42,9 +42,16 @@ bamboo:
   labels:
     io.rancher.sidekicks: bamboo-home
 
+postgres:
+  image: postgres:9.4
+  volumes_from:
+    - postgres-data
+  labels:
+    io.rancher.sidekicks: postgres-data
+
 jira-home:
   net: none
-  image: cptactionhank/atlassian-jira
+  image: busybox
   labels:
     io.rancher.container.start_once: true
   volumes:
@@ -53,27 +60,35 @@ jira-home:
 
 confluence-home:
   net: none
-  image: cptactionhank/atlassian-jira
+  image: busybox
   labels:
     io.rancher.container.start_once: true
   volumes:
-    - /var/atlassian/jira
-    - /opt/atlassian/jira/logs
+    - /var/atlassian/confluence
+    - /opt/atlassian/confluence/logs
 
 bitbucket-home:
   net: none
-  image: cptactionhank/atlassian-jira
+  image: busybox
   labels:
     io.rancher.container.start_once: true
   volumes:
-    - /var/atlassian/jira
-    - /opt/atlassian/jira/logs
+    - /var/atlassian/bitbucket
+    - /opt/atlassian/bitbucket/logs
 
 bamboo-home:
   net: none
-  image: cptactionhank/atlassian-jira
+  image: busybox
   labels:
     io.rancher.container.start_once: true
   volumes:
-    - /var/atlassian/jira
-    - /opt/atlassian/jira/logs
+    - /var/atlassian/bamboo
+    - /opt/atlassian/bamboo/logs
+
+postgres-data:
+  net: none
+  image: busybox
+  labels:
+    io.rancher.container.start_once: true
+  volumes:
+    - /var/lib/postgresql/data
