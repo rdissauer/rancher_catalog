@@ -5,27 +5,59 @@
     Atlassian Toolchain - Jira Confluence Bitbucket Bamboo
   minimum_rancher_version: v1.0.0
   questions:
-    - variable: jira_host
+    - variable: JIRA_HOST
       description: "Hostname of Jira instance reachable from external"
       label: "Jira Host"
       required: true
       default: "jira.example.com"
       type: string
-    - variable: confluence_host
+    - variable: CONFLUENCE_HOST
       description: "Hostname of Confluence instance reachable from external"
       label: "Confluence Host"
       required: true
       default: "confluence.example.com"
       type: string
-    - variable: bitbucket_host
+    - variable: BITBUCKET_HOST
       description: "Hostname of Bitbucket instance reachable from external"
       label: "Confluence Host"
       required: true
       default: "bitbucket.example.com"
       type: string
-    - variable: bamboo_host
+    - variable: BAMBOO_HOST
       description: "Hostname of Bamboo instance reachable from external"
       label: "Confluence Host"
       required: true
       default: "bamboo.example.com"
       type: string
+    - variable: POSTGRES_USER
+      label: "Database Username"
+      required: true
+      default: "atlassian"
+      type: string
+    - variable: POSTGRES_PASSWORD
+      label: "Database Password"
+      required: true
+      default: "mysecretpassword"
+      type: string
+    - variable: POSTGRES_DB
+      label: "Database Name"
+      required: true
+      default: "atlassian"
+      type: string
+    - variable: HOST_CERT
+      description: "Wildcard Certificate for all Hostnames"
+      label: "Certificate"
+      required: true
+      type: certificate
+
+lb:
+  scale: 1
+  load_balancer_config:
+    haproxy_config: {}
+  default_cert: ${HOST_CERT}
+  health_check:
+    port: 42
+    interval: 2000
+    unhealthy_threshold: 3
+    healthy_threshold: 2
+    response_timeout: 2000

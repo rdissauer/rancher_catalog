@@ -1,11 +1,32 @@
+atlassian-lb:
+  image: rancher/load-balancer-service
+  ports:
+  - 80:80
+  - 443:443
+  labels:
+    io.rancher.loadbalancer.ssl.ports: '443'
+    io.rancher.loadbalancer.target.jira: ${JIRA_HOST}/bamboo=8085
+    io.rancher.loadbalancer.target.confluence: ${CONFLUENCE_HOST}/bitbucket=7990
+    io.rancher.loadbalancer.target.bitbucket: ${BITBUCKET_HOST}/jira=8080
+    io.rancher.loadbalancer.target.bamboo: ${BAMBOO_HOST}/confluence=8090
+  links:
+    - jira:jira
+    - bamboo:bamboo
+    - confluence:confluence
+    - bitbucket:bitbucket
+  tty: true
+  stdin_open: true
+
 jira:
   image: cptactionhank/atlassian-jira
   volumes_from:
     - jira-home
   environment:
-    - X_PROXY_NAME=${jira_host}
+    - X_PROXY_NAME=${JIRA_HOST}
     - X_PROXY_PORT=443
     - X_PROXY_SCHEME=https
+  links:
+    - postgres:postgres
   labels:
     io.rancher.sidekicks: jira-home
 confluence:
@@ -13,72 +34,95 @@ confluence:
   volumes_from:
     - confluence-home
   environment:
-    - X_PROXY_NAME=${confluence_host}
+    - X_PROXY_NAME=${CONFLUENCE_HOST}
     - X_PROXY_PORT=443
     - X_PROXY_SCHEME=https
+  links:
+    - postgres:postgres
   labels:
     io.rancher.sidekicks: confluence-home
+
 bitbucket:
   image: cptactionhank/atlassian-bitbucket
   volumes_from:
     - bitbucket-home
   environment:
-    - X_PROXY_NAME=${bitbucket_host}
+    - X_PROXY_NAME=${BITBUCKET_HOST}
     - X_PROXY_PORT=443
     - X_PROXY_SCHEME=https
+  links:
+    - postgres:postgres
   labels:
     io.rancher.sidekicks: bitbucket-home
+
 bamboo:
   image: cptactionhank/atlassian-bamboo
   volumes_from:
     - bamboo-home
   environment:
-    - X_PROXY_NAME=${bamboo_host}
+    - X_PROXY_NAME=${BAMBOO_HOST}
     - X_PROXY_PORT=443
     - X_PROXY_SCHEME=https
+  links:
+    - postgres:postgres
   labels:
     io.rancher.sidekicks: bamboo-home
+
 postgres:
   image: postgres:9.4
   volumes_from:
     - postgres-data
+  environment:
+    - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    - POSTGRES_USER=${POSTGRES_USER}
+    - POSTGRES_DB=${POSTGRES_DB}
   labels:
     io.rancher.sidekicks: postgres-data
+
 jira-home:
   net: none
-  image: busybox
+  image: cptactionhank/atlassian-jira
+  command: /bin/true
   labels:
     io.rancher.container.start_once: true
   volumes:
     - /var/atlassian/jira
     - /opt/atlassian/jira/logs
+
 confluence-home:
   net: none
-  image: busybox
+  image: cptactionhank/atlassian-confluence
+  command: /bin/true
   labels:
     io.rancher.container.start_once: true
   volumes:
     - /var/atlassian/confluence
     - /opt/atlassian/confluence/logs
+
 bitbucket-home:
   net: none
-  image: busybox
+  image: cptactionhank/atlassian-bitbucket
+  command: /bin/true
   labels:
     io.rancher.container.start_once: true
   volumes:
     - /var/atlassian/bitbucket
     - /opt/atlassian/bitbucket/logs
+
 bamboo-home:
   net: none
-  image: busybox
+  image: cptactionhank/atlassian-bamboo
+  command: /bin/true
   labels:
     io.rancher.container.start_once: true
   volumes:
     - /var/atlassian/bamboo
     - /opt/atlassian/bamboo/logs
+
 postgres-data:
   net: none
-  image: busybox
+  image: postgres:9.4
+  command: /bin/true
   labels:
     io.rancher.container.start_once: true
   volumes:
