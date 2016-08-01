@@ -1,14 +1,12 @@
 graylog2:
   image: graylog2/server
-  volumes_from:
-    - jira-home
   environment:
-    - GRAYLOG_PASSWORD_SECRET=${JIRA_HOST}
-    - GRAYLOG_ROOT_PASSWORD_SHA2=443
-    - GRAYLOG_REST_TRANSPORT_URI=http://${local.ip}:12900
+    - GRAYLOG_PASSWORD_SECRET=somepasswordpepper
+    - GRAYLOG_ROOT_PASSWORD_SHA2=8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918
+    - GRAYLOG_REST_TRANSPORT_URI=http://graylog.rdi.at:12900
   links:
     - ${ELASTIC}:elasticsearch
-    - ${MONGO}:mongodb
+    - ${MONGO}:mongo
 
 lb:
   image: rancher/load-balancer-service

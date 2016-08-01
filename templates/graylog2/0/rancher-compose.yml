@@ -15,6 +15,18 @@
       label: "MongoDB"
       required: true
       type: service
+    - variable: GRAYLOG_WEB
+      description: "Port for Graylog2 Web Access"
+      label: "Web Port"
+      required: true
+      default: 9000
+      type: int
+    - variable: GRAYLOG_INPUT
+      description: "Graylog2 listening port"
+      label: "Graylog2 Port"
+      required: true
+      default: 12900
+      type: int
 
 graylog-cluster:
   scale: 3
