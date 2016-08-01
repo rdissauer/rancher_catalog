@@ -1,0 +1,32 @@
+.catalog:
+  name: Graylog2
+  version: v0.1.0
+  description: |
+    Graylog2 - Logging Service
+  minimum_rancher_version: v1.0.0
+  questions:
+    - variable: ELASTIC
+      description: "Link to elasticsearch service or stack/service"
+      label: "Elasticsearch source"
+      required: true
+      type: service
+    - variable: MONGO
+      description: "Link to MongoDB service or stack/service"
+      label: "MongoDB"
+      required: true
+      type: service
+
+graylog-cluster:
+  scale: 3
+  retain_ip: true
+
+lb:
+  scale: 1
+  load_balancer_config:
+    haproxy_config: {}
+  health_check:
+    port: 42
+    interval: 2000
+    unhealthy_threshold: 3
+    healthy_threshold: 2
+    response_timeout: 2000

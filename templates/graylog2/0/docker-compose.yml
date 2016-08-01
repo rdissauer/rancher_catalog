@@ -1,0 +1,24 @@
+graylog2:
+  image: graylog2/server
+  volumes_from:
+    - jira-home
+  environment:
+    - GRAYLOG_PASSWORD_SECRET=${JIRA_HOST}
+    - GRAYLOG_ROOT_PASSWORD_SHA2=443
+    - GRAYLOG_REST_TRANSPORT_URI=http://${local.ip}:12900
+  links:
+    - ${ELASTIC}:elasticsearch
+    - ${MONGO}:mongodb
+
+lb:
+  image: rancher/load-balancer-service
+  ports:
+    - ${GRAYLOG_WEB}:9000
+    - ${GRAYLOG_INPUT}:12900
+  labels:
+    io.rancher.loadbalancer.target.graylog2: 9000=9000
+    io.rancher.loadbalancer.target.graylog2: 12900=12900
+  links:
+    - graylog2:graylog2
+  tty: true
+  stdin_open: true

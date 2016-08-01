@@ -1,0 +1,8 @@
+name: Graylog2
+description: |
+  Graylog2 Logging Service
+version: v0.1.0
+category: Logging
+maintainer: Roman Dissauer
+license: GNU General Public License
+projectURL: www.graylog.org
